@@ -13,7 +13,7 @@ public class ProductController {
     @GetMapping("/product")
     public String list() {
 
-        return "/index";
+        return "/product/list";
     }
 
     @GetMapping("/product/{id}")
