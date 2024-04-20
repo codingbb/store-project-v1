@@ -11,6 +11,14 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepo;
 
+    //상품 삭제하기
+    @Transactional
+    public void deleteById(Integer id) {
+        //추후 delete 할 때, 존재하는지 확인하고 들어갈 것. 지금은 생략
+        productRepo.deleteById(id);
+    }
+
+
     //상품 상세보기
     public Product findById(Integer id) {
         Product product = productRepo.findById(id);
