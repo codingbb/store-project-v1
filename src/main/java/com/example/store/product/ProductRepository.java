@@ -12,6 +12,18 @@ import java.util.List;
 public class ProductRepository {
     private final EntityManager em;
 
+    //상품 상세보기
+    public Product findById(Integer id) {
+        String q = """
+                select * from product_tb where id = ?
+                """;
+        Query query = em.createNativeQuery(q, Product.class);
+        query.setParameter(1, id);
+        Product result = (Product) query.getSingleResult();
+        return result;
+    }
+
+
     //상품 목록보기
     public List<Product> findAll() {
         String q = """

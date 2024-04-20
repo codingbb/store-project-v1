@@ -11,6 +11,13 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepo;
 
+    //상품 상세보기
+    public Product findById(Integer id) {
+        Product product = productRepo.findById(id);
+        return product;
+    }
+
+
     //상품 목록 보기
     public List<Product> findAll() {
         List<Product> productList = productRepo.findAll();
