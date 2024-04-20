@@ -39,33 +39,6 @@
     </div>
 </div>
 
-<script>
-    // 실시간 상품명 중복체크
-    $("#name").keyup(function (){
-        //this = 지금 현재 클릭한 것, val = 값 가져옴
-        var name = $(this).val();
-        var productId = $("input[name='productId']").val(); // 상품 ID 가져오기
-        // alert(name);
-
-        //서버로 가서 id 중복체크 -> url과 입력 데이터는 바뀌면 안됨 -> Ajax
-        //url -> /product/name-check
-        //서버에서 전달되는 데이터를 result로 받음 -> 가져온 데이터가 null이면 사용 가능, 있으면 중복
-        var encodedName = encodeURIComponent(name); //이게 없으면 띄어쓰기 인식 안됨
-        $("#nameCheck").load("/product/name-check/update?name=" + encodedName + "&id=" + productId, function (result){
-            // -1보다 크다 = 0번부터 있다. -1이면 없다
-            if (result === "true") {
-                $("#nameCheck").removeClass("alert-danger");
-                $("#nameCheck").addClass("alert-success");
-                $("#nameCheck").text("사용 가능한 상품명 입니다.");
-            } else {
-                $("#nameCheck").removeClass("alert-success");
-                $("#nameCheck").addClass("alert-danger");
-                $("#nameCheck").text("중복된 상품명 입니다.");
-            }
-        });
-
-    });
-
-</script>
+{{> scripts/name-check-update}}
 
 {{> layout/footer}}
