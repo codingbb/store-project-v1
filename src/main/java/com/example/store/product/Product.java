@@ -28,6 +28,9 @@ public class Product {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Transient
+    private Integer indexNumb;
+
     @Builder
     public Product(Integer id, String name, Integer price, Integer qty, LocalDateTime createdAt) {
         this.id = id;

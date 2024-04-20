@@ -1,11 +1,19 @@
 {{> layout/header}}
 
+<style>
+    .offer-table th, .offer-table td {
+        text-align: center;
+        vertical-align: middle; /* 셀 내용을 수직 가운데 정렬 */
+    }
+</style>
+
 <div class="container">
     <table class="table table-hover offer-table scroll" style="text-align: center; border-top:2px solid #ddd">
         <br>
         <h2>상품 등록 리스트</h2>
         <br>
 
+        <!--        목록 -->
         <thead>
         <tr>
             <th class="center-align col-1">No</th>
@@ -15,25 +23,59 @@
             <th class="center-align col-2">상세보기</th>
         </tr>
         </thead>
+        <!--        목록 끝-->
 
+        <!--        상품 테이블-->
         <tbody>
-        <tr class="offer-table">
-            <th scope="row">1</th>
-            <td>ㅇ</td>
-            <td>{ㅇ</td>
-            <td>{</td>
-            <td>
-                <div class="new-create-button">
-                    <form action="/*">
-                        <button type="submit" class="btn btn-outline-primary">상세보기</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
+        {{#productList}}
+            <tr class="offer-table">
+                <th scope="row">{{indexNumb}}</th>
+                <td>{{name}}</td>
+                <td class="price">{{price}}</td>
+                <td class="qty">{{qty}}</td>
+                <td>
+                    <div class="new-create-button">
+                        <form action="/*">
+                            <button type="submit" class="btn btn-outline-primary">상세보기</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {{/productList}}
         </tbody>
+        <!--        상품 테이블 끝-->
 
     </table>
 </div>
 
-<div style="margin-bottom: 25%"></div>
+<div style="margin-bottom: 15%"></div>
+
+<script>
+<!--    가격 표시 -->
+    $(document).ready(function() {
+        $('.price').each(function(){
+            var price = $(this).text();
+            let result = priceToString(parseInt(price));
+            $(this).html(result);
+        });
+    });
+
+    // 수량 표시
+    function priceToString(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    $(document).ready(function() {
+        $('.qty').each(function(){
+            var qty = $(this).text();
+            let result = priceToString(parseInt(qty));
+            $(this).html(result);
+        });
+    });
+
+    function qtyToString(qty) {
+        return qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+</script>
+
 {{> layout/footer}}
