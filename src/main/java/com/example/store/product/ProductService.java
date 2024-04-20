@@ -72,4 +72,8 @@ public class ProductService {
         productRepo.save(requestDTO);
     }
 
+    public Product findByName(String name) {
+        Product product = productRepo.findByName(name);
+        return product;
+    }
 }

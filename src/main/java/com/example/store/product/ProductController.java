@@ -3,9 +3,7 @@ package com.example.store.product;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -76,5 +74,16 @@ public class ProductController {
         request.setAttribute("productList", productList);
         return "/index";
     }
+
+    @GetMapping("/product/name-check")
+    public @ResponseBody String nameSameCheck(String name) {
+        Product product = productService.findByName(name);
+        if (product == null) {
+            return "true"; //상품 등록 가능
+        } else {
+            return "false"; //상품 등록 불가
+        }
+    }
+
 
 }

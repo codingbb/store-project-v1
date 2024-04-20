@@ -1,6 +1,7 @@
 package com.example.store.product;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -74,4 +75,18 @@ public class ProductRepository {
     }
 
 
+    public Product findByName(String name) {
+        try {
+            String q = """
+                    select * from product_tb where name = ?
+                    """;
+            Query query = em.createNativeQuery(q, Product.class);
+            query.setParameter(1, name);
+            Product product = (Product) query.getSingleResult();
+            return product;
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
