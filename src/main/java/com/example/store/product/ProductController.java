@@ -54,11 +54,20 @@ public class ProductController {
         return "/product/save-form";
     }
 
-    @GetMapping("/product/update-form")
-    public String updateForm() {
-
+    //업데이트 폼 (업데이트는 2개가 나와야합니다 ^^)
+    @GetMapping("/product/{id}/update-form")
+    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+        Product product = productService.findById(id);
+        request.setAttribute("product", product);
         return "/product/update-form";
     }
+
+    @PostMapping("/product/{id}/update")
+    public String update(@PathVariable Integer id) {
+
+        return null;
+    }
+
 
     @GetMapping("/")
     public String main() {
