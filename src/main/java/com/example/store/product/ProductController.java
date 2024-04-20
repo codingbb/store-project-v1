@@ -26,7 +26,7 @@ public class ProductController {
     //상품 목록보기
     @GetMapping("/product")
     public String listForm(HttpServletRequest request) {
-        List<Product> productList = productService.findAll();
+        List<ProductResponse.ListDTO> productList = productService.findAllList();
         request.setAttribute("productList", productList);
 
         return "/product/list";
@@ -35,7 +35,7 @@ public class ProductController {
     //상품 상세보기
     @GetMapping("/product/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
-        Product product = productService.findById(id);
+        ProductResponse.DetailDTO product = productService.findByIdDetail(id);
         request.setAttribute("product", product);
         return "/product/detail";
     }
@@ -57,7 +57,7 @@ public class ProductController {
     //업데이트 폼 (업데이트는 2개가 나와야합니다 ^^)
     @GetMapping("/product/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-        Product product = productService.findById(id);
+        ProductResponse.UpdateDTO product = productService.findByIdUpdate(id);
         request.setAttribute("product", product);
         return "/product/update-form";
     }
@@ -72,7 +72,7 @@ public class ProductController {
 
     @GetMapping("/")
     public String main(HttpServletRequest request) {
-        List<Product> productList = productService.findAll();
+        List<ProductResponse.MainDTO> productList = productService.findAllMain();
         request.setAttribute("productList", productList);
         return "/index";
     }

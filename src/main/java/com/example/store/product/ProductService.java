@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,14 +29,29 @@ public class ProductService {
 
 
     //상품 상세보기
-    public Product findById(Integer id) {
+    public ProductResponse.DetailDTO findByIdDetail(Integer id) {
         Product product = productRepo.findById(id);
-        return product;
+        return new ProductResponse.DetailDTO(product);
+    }
+
+    //상품 업데이트 폼 보기
+    public ProductResponse.UpdateDTO findByIdUpdate(Integer id) {
+        Product product = productRepo.findById(id);
+        return new ProductResponse.UpdateDTO(product);
     }
 
 
-    //상품 목록 보기
-    public List<Product> findAll() {
+    //상품 메인 목록 보기
+    public List<ProductResponse.MainDTO> findAllMain() {
+        List<Product> productList = productRepo.findAll();
+
+        //엔티티 받아온걸 dto로 변경
+        return productList.stream().map(product ->
+                new ProductResponse.MainDTO(product)).collect(Collectors.toList());
+    }
+
+    //상품 리스트 목록 보기
+    public List<ProductResponse.ListDTO> findAllList() {
         List<Product> productList = productRepo.findAll();
 
         //pk로 no 주니까 너무 지저분해져서 no용 필드를 새로 만들어줌
@@ -44,7 +60,9 @@ public class ProductService {
             product.setIndexNumb(indexNumb++);
         }
 
-        return productList;
+        //엔티티 받아온걸 dto로 변경
+        return productList.stream().map(product ->
+                new ProductResponse.ListDTO(product)).collect(Collectors.toList());
     }
 
 
