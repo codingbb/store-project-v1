@@ -91,5 +91,23 @@ public class ProductRepository {
         }
     }
 
+    //상품명 실시간 중복체크
+    //TODO: 레파지토리에서 try-catch를 안하고 싶은데... 어떻게 해야하지?
+    public Product findByNameUpdate(String name, Integer id) {
+        try {
+            String q = """
+                    select * from product_tb where name = ? and id != ?
+                    """;
+            Query query = em.createNativeQuery(q, Product.class);
+            query.setParameter(1, name);
+            query.setParameter(2, id);
+            Product product = (Product) query.getSingleResult();
+            return product;
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 
 }

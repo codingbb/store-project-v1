@@ -20,14 +20,16 @@
         <!-- 상품 정보 입력 -->
         <div class="col-lg-6 px-xl-10">
             <form action="/product/{{id}}/update" method="post">
+                <input type="hidden" name="productId" value="{{product.id}}">
                 <div class="mb-3 mt-3">
-                    상 품 명 : <input name="name" type="text" class="form-control" value="{{product.name}}">
+                    상 품 명 : <input id="name" name="name" type="text" class="form-control" value="{{product.name}}">
+                    <div class="alert" id="nameCheck"></div>
                 </div>
                 <div class="mb-3 mt-3">
-                    상품가격 : <input name="price" type="number" class="form-control" value="{{product.price}}">
+                    상품가격 : <input id="price" name="price" type="text" class="form-control" value="{{product.price}}">
                 </div>
                 <div class="mb-3 mt-3">
-                    상품수량 : <input name="qty" type="number" class="form-control" value="{{product.qty}}">
+                    상품수량 : <input id="qty" name="qty" type="text" class="form-control" value="{{product.qty}}">
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary mt-3">상품수정완료</button>
@@ -36,5 +38,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 실시간 상품명 중복체크
+    $("#name").keyup(function (){
+        //this = 지금 현재 클릭한 것, val = 값 가져옴
+        var name = $(this).val();
+        var productId = $("input[name='productId']").val(); // 상품 ID 가져오기
+        // alert(name);
+
+        //서버로 가서 id 중복체크 -> url과 입력 데이터는 바뀌면 안됨 -> Ajax
+        //url -> /product/name-check
+        //서버에서 전달되는 데이터를 result로 받음 -> 가져온 데이터가 null이면 사용 가능, 있으면 중복
+        var encodedName = encodeURIComponent(name); //이게 없으면 띄어쓰기 인식 안됨
+        $("#nameCheck").load("/product/name-check/update?name=" + encodedName + "&id=" + productId, function (result){
+            // -1보다 크다 = 0번부터 있다. -1이면 없다
+            if (result === "true") {
+                $("#nameCheck").removeClass("alert-danger");
+                $("#nameCheck").addClass("alert-success");
+                $("#nameCheck").text("사용 가능한 상품명 입니다.");
+            } else {
+                $("#nameCheck").removeClass("alert-success");
+                $("#nameCheck").addClass("alert-danger");
+                $("#nameCheck").text("중복된 상품명 입니다.");
+            }
+        });
+
+    });
+
+</script>
 
 {{> layout/footer}}
