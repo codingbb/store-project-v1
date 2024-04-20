@@ -23,10 +23,11 @@ public class ProductController {
         return "/product/list";
     }
 
+    //상품 상세보기
     @GetMapping("/product/{id}")
     public String detail(@PathVariable Integer id) {
 
-        return "/product/detail/" + id;
+        return "/product/detail";
     }
 
     // 상품 등록
