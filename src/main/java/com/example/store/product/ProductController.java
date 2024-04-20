@@ -75,6 +75,7 @@ public class ProductController {
         return "/index";
     }
 
+    //상품명 실시간 중복체크
     @GetMapping("/product/name-check")
     public @ResponseBody String nameSameCheck(String name) {
         Product product = productService.findByName(name);

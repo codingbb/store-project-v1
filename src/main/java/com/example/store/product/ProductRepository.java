@@ -74,7 +74,8 @@ public class ProductRepository {
 
     }
 
-
+    //상품명 실시간 중복체크
+    //TODO: 레파지토리에서 try-catch를 안하고 싶은데... 어떻게 해야하지?
     public Product findByName(String name) {
         try {
             String q = """
@@ -89,4 +90,6 @@ public class ProductRepository {
             return null;
         }
     }
+
+
 }
