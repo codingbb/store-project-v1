@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     // 상품 등록
-    @PostMapping("/save")
+    @PostMapping("/product/save")
     public String save(ProductRequest.SaveDTO requestDTO) {
         productService.save(requestDTO);
         return "redirect:/product";
@@ -62,10 +62,11 @@ public class ProductController {
         return "/product/update-form";
     }
 
+    //업데이트
     @PostMapping("/product/{id}/update")
-    public String update(@PathVariable Integer id) {
-
-        return null;
+    public String update(@PathVariable Integer id, ProductRequest.UpdateDTO requestDTO) {
+        productService.updateById(id, requestDTO);
+        return "redirect:/product";
     }
 
 
