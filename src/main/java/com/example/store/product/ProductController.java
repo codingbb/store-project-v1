@@ -1,7 +1,10 @@
 package com.example.store.product;
 
+import com.example.store._core.utils.ApiUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,12 +80,13 @@ public class ProductController {
 
     //상품명 실시간 중복체크
     @GetMapping("/product/name-check")
-    public @ResponseBody String nameSameCheck(String name) {
+    public @ResponseBody ResponseEntity<?> nameSameCheck(String name, HttpServletResponse response) {
         Product product = productService.findByName(name);
         if (product == null) {
-            return "true"; //상품 등록 가능
+            return ResponseEntity.ok(new ApiUtil<>(true)); //상품 등록 가능
         } else {
-            return "false"; //상품 등록 불가
+            //response.setStatus(400);
+            return ResponseEntity.ok(new ApiUtil<>(false)); //상품 등록 불가
         }
     }
 
