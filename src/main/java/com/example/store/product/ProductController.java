@@ -80,7 +80,7 @@ public class ProductController {
 
     //상품명 실시간 중복체크
     @GetMapping("/product/name-check")
-    public @ResponseBody ResponseEntity<?> nameSameCheck(String name, HttpServletResponse response) {
+    public @ResponseBody ResponseEntity<?> nameSameCheck(String name) {
         Product product = productService.findByName(name);
         if (product == null) {
             return ResponseEntity.ok(new ApiUtil<>(true)); //상품 등록 가능
@@ -92,12 +92,12 @@ public class ProductController {
 
     //상품명 실시간 중복체크 (업데이트용)
     @GetMapping("/product/name-check/update")
-    public @ResponseBody String nameSameCheckUpdate(String name, Integer id) {
+    public @ResponseBody ResponseEntity<?> nameSameCheckUpdate(String name, Integer id) {
         Product product = productService.findByNameUpdate(name, id);
         if (product == null) {
-            return "true"; //상품 등록 가능
+            return ResponseEntity.ok(new ApiUtil<>(true)); //상품 등록 가능
         } else {
-            return "false"; //상품 등록 불가
+            return ResponseEntity.ok(new ApiUtil<>(false)); //상품 등록 불가
         }
     }
 
