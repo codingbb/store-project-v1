@@ -1,6 +1,7 @@
 package com.example.store.product;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ProductRequest {
 
@@ -16,6 +17,7 @@ public class ProductRequest {
         private String name;
         private Integer price;
         private Integer qty;
+        private String imgFilename;
 
     }
 

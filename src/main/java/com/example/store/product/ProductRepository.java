@@ -63,13 +63,14 @@ public class ProductRepository {
     //상품 등록
     public void save(ProductRequest.SaveDTO requestDTO) {
         String q = """
-                insert into product_tb(name, price, qty, created_at) values (?, ?, ?, now())
+                insert into product_tb(name, price, qty, imgFilename, created_at) values (?, ?, ?, ?, now())
                 """;
 
         Query query = em.createNativeQuery(q);
         query.setParameter(1, requestDTO.getName());
         query.setParameter(2, requestDTO.getPrice());
         query.setParameter(3, requestDTO.getQty());
+        query.setParameter(4, requestDTO.getImgFilename());
         query.executeUpdate();
 
     }

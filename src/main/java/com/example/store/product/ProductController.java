@@ -1,19 +1,42 @@
 package com.example.store.product;
 
 import com.example.store._core.utils.ApiUtil;
+import com.example.store.pic.PicRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class ProductController {
     private final ProductService productService;
+
+
+    @PostMapping("/upload")
+    public String upload(PicRequest.UploadDTO requestDTO) {
+        MultipartFile imgFile = requestDTO.getImgFile();
+        String imgFileName = imgFile.getOriginalFilename();
+
+        Path imgPath = Paths.get("./src/main/resources/static/upload/" + imgFileName);
+
+        try {
+            Files.write(imgPath, imgFile.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/";
+    }
 
     //상품 삭제
     @PostMapping("/product/{id}/delete")
