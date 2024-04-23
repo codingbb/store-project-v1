@@ -62,18 +62,19 @@ public class ProductRepository {
     }
 
     //상품 등록
-    public void save(ProductRequest.SaveDTO requestDTO) {
+    public void save(ProductRequest.SaveDTO requestDTO, String imgFileName) {
         String q = """
-                insert into product_tb(name, price, qty, created_at) values (?, ?, ?, ?, now())
+                insert into product_tb(name, price, qty, img_file_name, created_at) values (?, ?, ?, ?, now())
                 """;
 
         Query query = em.createNativeQuery(q);
         query.setParameter(1, requestDTO.getName());
         query.setParameter(2, requestDTO.getPrice());
         query.setParameter(3, requestDTO.getQty());
+        query.setParameter(4, imgFileName);
         query.executeUpdate();
-
     }
+
 
     //상품명 실시간 중복체크
     //TODO: 레파지토리에서 try-catch를 안하고 싶은데... 어떻게 해야하지?
@@ -111,13 +112,4 @@ public class ProductRepository {
     }
 
 
-    public void saveImg(String imgFileName) {
-        String q = """
-                insert into product_tb (imgFilename) values (?)
-                """;
-        Query query = em.createNativeQuery(q);
-        query.setParameter(1, imgFileName);
-        query.executeUpdate();
-
-    }
 }

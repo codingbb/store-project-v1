@@ -69,8 +69,8 @@ public class ProductService {
 
     //상품 등록
     @Transactional
-    public void save(ProductRequest.SaveDTO requestDTO) {
-        productRepo.save(requestDTO);
+    public void save(ProductRequest.SaveDTO requestDTO, String imgFileName) {
+        productRepo.save(requestDTO, imgFileName);
     }
 
     //상품명 실시간 중복체크
@@ -83,10 +83,5 @@ public class ProductService {
     public Product findByNameUpdate(String name, Integer id) {
         Product product = productRepo.findByNameUpdate(name, id);
         return product;
-    }
-
-    @Transactional
-    public void saveImg(String imgFileName) {
-        productRepo.saveImg(imgFileName);
     }
 }

@@ -22,27 +22,6 @@ import java.util.UUID;
 public class ProductController {
     private final ProductService productService;
 
-
-    @PostMapping("/upload")
-    public String upload(ProductRequest.UploadDTO requestDTO) {
-        MultipartFile imgFile = requestDTO.getImgFile();
-
-        String imgFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
-
-//        Path imgPath = Paths.get("./src/main/resources/static/upload/" + imgFileName);
-        Path imgPath = Paths.get("./upload/" + imgFileName);
-
-        try {
-            Files.write(imgPath, imgFile.getBytes());
-            productService.saveImg(imgFileName);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return "redirect:/";
-    }
-
     //상품 삭제
     @PostMapping("/product/{id}/delete")
     public String deleteById(@PathVariable Integer id) {
@@ -66,13 +45,33 @@ public class ProductController {
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
         ProductResponse.DetailDTO product = productService.findByIdDetail(id);
         request.setAttribute("product", product);
+
+        System.out.println(product);
         return "/product/detail";
     }
 
     // 상품 등록
     @PostMapping("/product/save")
     public String save(ProductRequest.SaveDTO requestDTO) {
-        productService.save(requestDTO);
+        System.out.println(requestDTO);
+
+        MultipartFile imgFile = requestDTO.getImgFile();
+        String imgFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+
+//        Path imgPath = Paths.get("./src/main/resources/static/upload/" + imgFileName);
+        Path imgPath = Paths.get("./upload/" + imgFileName);
+
+        try {
+            //upload 디렉토리가 존재하지 않는다면, 서버가 시작될 때 해당 디렉토리를 자동으로 생성하는 코드
+            //static에 안 넣으려고 설정해줬나봄
+            Files.createDirectories(imgPath.getParent());
+            Files.write(imgPath, imgFile.getBytes());
+            productService.save(requestDTO, imgFileName);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return "redirect:/product";
     }
 
@@ -102,6 +101,7 @@ public class ProductController {
     @GetMapping("/")
     public String main(HttpServletRequest request) {
         List<ProductResponse.MainDTO> productList = productService.findAllMain();
+        System.out.println(productList);
         request.setAttribute("productList", productList);
         return "/index";
     }
