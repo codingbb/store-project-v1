@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -23,14 +24,18 @@ public class ProductController {
 
 
     @PostMapping("/upload")
-    public String upload(PicRequest.UploadDTO requestDTO) {
+    public String upload(ProductRequest.UploadDTO requestDTO) {
         MultipartFile imgFile = requestDTO.getImgFile();
-        String imgFileName = imgFile.getOriginalFilename();
 
-        Path imgPath = Paths.get("./src/main/resources/static/upload/" + imgFileName);
+        String imgFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+
+//        Path imgPath = Paths.get("./src/main/resources/static/upload/" + imgFileName);
+        Path imgPath = Paths.get("./upload/" + imgFileName);
 
         try {
             Files.write(imgPath, imgFile.getBytes());
+            productService.saveImg(imgFileName);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,6 @@
 package com.example.store.product;
 
+import com.example.store.pic.PicRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -82,5 +83,10 @@ public class ProductService {
     public Product findByNameUpdate(String name, Integer id) {
         Product product = productRepo.findByNameUpdate(name, id);
         return product;
+    }
+
+    @Transactional
+    public void saveImg(String imgFileName) {
+        productRepo.saveImg(imgFileName);
     }
 }
