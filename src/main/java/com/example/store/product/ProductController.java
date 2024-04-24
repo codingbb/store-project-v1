@@ -1,7 +1,6 @@
 package com.example.store.product;
 
 import com.example.store._core.utils.ApiUtil;
-import com.example.store.pic.PicRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

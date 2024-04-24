@@ -1,6 +1,5 @@
 package com.example.store.product;
 
-import com.example.store.pic.PicRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

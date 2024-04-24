@@ -1,6 +1,4 @@
 package com.example.store.product;
-
-import com.example.store.pic.PicRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
