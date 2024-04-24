@@ -31,6 +31,7 @@ public class ProductResponse {
         private String name;
         private Integer price;
         private Integer qty;
+        private String imgFileName;
 
         @Builder
         public UpdateDTO(Product product) {
@@ -38,6 +39,7 @@ public class ProductResponse {
             this.name = product.getName();
             this.price = product.getPrice();
             this.qty = product.getQty();
+            this.imgFileName = product.getImgFileName();
         }
     }
 

@@ -87,14 +87,43 @@ public class ProductController {
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
         ProductResponse.UpdateDTO product = productService.findByIdUpdate(id);
         request.setAttribute("product", product);
+        System.out.println(product);
         return "/product/update-form";
     }
 
     //업데이트
     @PostMapping("/product/{id}/update")
     public String update(@PathVariable Integer id, ProductRequest.UpdateDTO requestDTO) {
-        productService.updateById(id, requestDTO);
-        return "redirect:/product";
+
+        String imgFileName;
+
+        // 이미지 파일이 존재할 경우, 새 파일명 생성 및 파일 저장
+        if (!requestDTO.getImgFile().isEmpty()) {
+            MultipartFile imgFile = requestDTO.getImgFile();
+            imgFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+
+            Path imgPath = Paths.get("./upload/" + imgFileName);
+
+            try {
+                //upload 디렉토리가 존재하지 않는다면, 서버가 시작될 때 해당 디렉토리를 자동으로 생성하는 코드
+                //static에 안 넣으려고 설정해줬나봄
+                Files.createDirectories(imgPath.getParent());
+                Files.write(imgPath, imgFile.getBytes());
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            // 이미지 파일이 없을 경우, 기존 파일명 유지
+            ProductResponse.UpdateDTO existImg = productService.findByIdUpdate(id);
+            imgFileName = existImg.getImgFileName(); // 기존의 imgFileName을 가져와서 사용
+
+        }
+
+        productService.updateById(id, requestDTO, imgFileName);
+
+        return "redirect:/product/" + id;
     }
 
 

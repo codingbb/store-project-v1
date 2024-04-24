@@ -15,15 +15,16 @@ public class ProductRepository {
     private final EntityManager em;
 
     //상품 수정하기
-    public void updateById(Integer id, ProductRequest.UpdateDTO requestDTO) {
+    public void updateById(Integer id, ProductRequest.UpdateDTO requestDTO, String imgFileName) {
         String q = """
-                update product_tb set name = ?, price = ?, qty = ? where id = ?
+                update product_tb set name = ?, price = ?, qty = ?, img_file_name = ? where id = ?
                 """;
         Query query = em.createNativeQuery(q);
         query.setParameter(1, requestDTO.getName());
         query.setParameter(2, requestDTO.getPrice());
         query.setParameter(3, requestDTO.getQty());
-        query.setParameter(4, id);
+        query.setParameter(4, imgFileName);
+        query.setParameter(5, id);
         query.executeUpdate();
 
     }

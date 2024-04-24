@@ -15,8 +15,8 @@ public class ProductService {
 
     // 상품 업데이트
     @Transactional
-    public void updateById(Integer id, ProductRequest.UpdateDTO requestDTO) {
-        productRepo.updateById(id, requestDTO);
+    public void updateById(Integer id, ProductRequest.UpdateDTO requestDTO, String imgFileName) {
+        productRepo.updateById(id, requestDTO, imgFileName);
 
     }
 
