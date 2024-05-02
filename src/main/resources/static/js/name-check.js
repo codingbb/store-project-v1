@@ -6,7 +6,7 @@
 // 실시간 상품명 중복체크 (save용)
 $("#name").keyup(function (){
     //this = 지금 현재 클릭한 것, val = 값 가져옴
-    var name = $(this).val();
+    var name = $(this).val().trim();
     // alert(name);
 
     //서버로 가서 id 중복체크 -> url과 입력 데이터는 바뀌면 안됨 -> Ajax

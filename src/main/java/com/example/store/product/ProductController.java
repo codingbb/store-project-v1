@@ -148,8 +148,9 @@ public class ProductController {
 
     //상품명 실시간 중복체크 (업데이트용)
     @GetMapping("/product/name-check/update")
-    public @ResponseBody ResponseEntity<?> nameSameCheckUpdate(String name, Integer id) {
-        Product product = productService.findByNameUpdate(name, id);
+    public @ResponseBody ResponseEntity<?> nameSameCheckUpdate(String name, @RequestParam("productId") Integer productId) {
+        Product product = productService.findByNameUpdate(name, productId);
+        System.out.println("확인용 : " + name + productId);
         if (product == null) {
             return ResponseEntity.ok(new ApiUtil<>(true)); //상품 등록 가능
         } else {

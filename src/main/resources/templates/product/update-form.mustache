@@ -14,6 +14,7 @@
                     </div>
 
                     <div class="col-lg-6">
+                        <input type="hidden" id="productId" name="productId" value="{{product.id}}">
                         <div class="mb-3 mt-3">
                             상 품 명 : <input id="name" name="name" type="text" class="form-control" value="{{product.name}}">
                             <div class="alert alert-danger" id="nameCheck">상품명을 입력해주세요</div>
@@ -40,7 +41,7 @@
 </div>
 
 <script src="/js/img-upload.js"></script>
-<script src="/js/name-check.js"></script>
+<script src="/js/name-check-update.js"></script>
 <script src="/js/detail.js"></script>
 
 {{> layout/footer}}

@@ -1,7 +1,7 @@
 // 실시간 상품명 중복체크
 $("#name").keyup(function (){
     //this = 지금 현재 클릭한 것, val = 값 가져옴
-    var name = $(this).val();
+    var name = $(this).val().trim();
     var productId = $("input[name='productId']").val(); // 상품 ID 가져오기
     // alert(name);
 
@@ -12,7 +12,7 @@ $("#name").keyup(function (){
 
     $.ajax({
         method: "GET",
-        url: "/product/name-check/update?name=" + encodedName + "&id=" + productId
+        url: "/product/name-check/update?name=" + encodedName + "&productId=" + productId
 
     }).done((res)=>{
         console.log(res);

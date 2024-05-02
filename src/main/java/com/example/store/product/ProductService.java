@@ -79,8 +79,8 @@ public class ProductService {
     }
 
     //상품명 실시간 중복체크(업데이트)
-    public Product findByNameUpdate(String name, Integer id) {
-        Product product = productRepo.findByNameUpdate(name, id);
+    public Product findByNameUpdate(String name, Integer productId) {
+        Product product = productRepo.findByNameUpdate(name, productId);
         return product;
     }
 }
